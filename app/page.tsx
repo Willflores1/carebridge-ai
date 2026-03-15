@@ -4,24 +4,26 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <span className="text-xl font-bold text-primary-600">
-                Capstone Manager
+              <span className="text-2xl font-bold text-primary-600">
+                CareBridge AI
               </span>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-6">
+              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Home</Link>
+              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">About</Link>
+              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Services</Link>
+              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Features</Link>
+              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">FAQ</Link>
+              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Contact</Link>
+            </div>
+            <div className="flex items-center">
               <Link
-                href="/auth/signin"
-                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                href="#"
+                className="bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm"
               >
                 Get Started
               </Link>
@@ -31,64 +33,65 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex-1 flex items-center justify-center px-4 py-12">
+      <section className="flex-1 flex items-center justify-center px-4 py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-            Manage Your Capstone Project
-            <span className="text-primary-600"> Effortlessly</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+            Healthcare guidance made simpler, <span className="text-primary-600">faster, and more personal.</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Collaborate with your team, track tasks, and deliver your capstone project on time.
-            Built for students, by students.
+          <p className="text-xl md:text-2xl text-gray-600 mb-4 font-medium max-w-3xl mx-auto">
+            Smarter support for every step of the patient journey.
+          </p>
+          <p className="text-lg text-gray-500 mb-10 max-w-2xl mx-auto">
+            CareBridge AI helps patients find the right care, stay organized with appointments, and better understand next steps with confidence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/auth/signup"
-              className="bg-primary-600 text-white hover:bg-primary-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+              href="#"
+              className="bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg px-8 py-3 rounded-lg text-lg font-semibold transition-all transform hover:-translate-y-0.5"
             >
-              Start Your Project
+              Get Started
             </Link>
             <Link
-              href="/auth/signin"
+              href="#"
               className="bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-50 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
             >
-              Sign In
+              Learn More
             </Link>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Everything You Need
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
+            Empowering Your Healthcare Journey
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard
-              title="Project Management"
-              description="Create projects, set milestones, and track progress from start to finish."
-              icon="📋"
+              title="Care Navigation"
+              description="Find the right specialists and coordinate care seamlessly without the confusion."
+              icon="🧭"
             />
             <FeatureCard
-              title="Team Collaboration"
-              description="Invite team members, assign tasks, and communicate effectively."
-              icon="👥"
+              title="Appointment Reminders"
+              description="Never miss a beat with smart, timely notifications for all your healthcare visits."
+              icon="📅"
             />
             <FeatureCard
-              title="Task Tracking"
-              description="Break down work into tasks, set priorities, and never miss a deadline."
-              icon="✅"
+              title="Follow-up Guidance"
+              description="Clear, easy-to-understand post-visit instructions and health information."
+              icon="💡"
             />
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
-          <p>Sample Next.js Project for Capstone Course</p>
-          <p className="text-sm mt-2">Built with Next.js, PostgreSQL, Prisma, and NextAuth.js</p>
+      <footer className="bg-gray-50 py-12 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+          <p className="font-medium text-gray-700 mb-2">CareBridge AI</p>
+          <p className="text-sm">© {new Date().getFullYear()} CareBridge AI. All rights reserved.</p>
         </div>
       </footer>
     </main>
@@ -97,10 +100,10 @@ export default function Home() {
 
 function FeatureCard({ title, description, icon }: { title: string; description: string; icon: string }) {
   return (
-    <div className="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+    <div className="bg-white border text-center border-gray-100 rounded-2xl p-8 hover:shadow-xl hover:border-primary-100 transition-all duration-300 transform hover:-translate-y-1">
+      <div className="mx-auto w-16 h-16 flex items-center justify-center bg-primary-50 rounded-full text-3xl mb-6">{icon}</div>
+      <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
     </div>
   );
 }
