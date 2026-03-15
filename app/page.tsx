@@ -13,20 +13,12 @@ export default function Home() {
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-6">
-              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Home</Link>
-              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">About</Link>
-              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Services</Link>
-              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Features</Link>
-              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">FAQ</Link>
-              <Link href="#" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Contact</Link>
-            </div>
-            <div className="flex items-center">
-              <Link
-                href="#"
-                className="bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm"
-              >
-                Get Started
-              </Link>
+              <Link href="/" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Home</Link>
+              <Link href="/about" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">About</Link>
+              <Link href="/services" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Services</Link>
+              <Link href="/features" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Features</Link>
+              <Link href="/faq" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">FAQ</Link>
+              <Link href="/contact" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Contact</Link>
             </div>
           </div>
         </div>
@@ -46,13 +38,13 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="#"
+              href="/contact"
               className="bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg px-8 py-3 rounded-lg text-lg font-semibold transition-all transform hover:-translate-y-0.5"
             >
               Get Started
             </Link>
             <Link
-              href="#"
+              href="/about"
               className="bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-50 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
             >
               Learn More
