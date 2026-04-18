@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 export default function Services() {
   return (
@@ -107,12 +108,7 @@ export default function Services() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-50 py-12 border-t border-gray-100 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
-          <p className="font-medium text-gray-700 mb-2">CareBridge AI</p>
-          <p className="text-sm">© {new Date().getFullYear()} CareBridge AI. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

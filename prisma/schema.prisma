@@ -218,3 +218,91 @@ model Comment {
   @@index([taskId])
   @@index([authorId])
 }
+
+// ============================================
+// CareBridge AI Health Models
+// ============================================
+
+model Patient {
+  id              String            @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String            @unique
+  phoneNumber     String?
+  dateOfBirth     DateTime?
+  healthNotes     String?           @db.Text
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  appointments     Appointment[]
+  careInstructions CareInstruction[]
+}
+
+model Provider {
+  id              String            @id @default(cuid())
+  name            String
+  specialty       String?
+  location        String?
+  phoneNumber     String?
+  email           String            @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  appointments    Appointment[]
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  appointmentDate DateTime
+  appointmentTime String
+  status          String
+  reason          String?           @db.Text
+  patientId       String
+  providerId      String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  patient         Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  provider        Provider          @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  reminders       Reminder[]
+  careInstructions CareInstruction[]
+
+  @@index([patientId])
+  @@index([providerId])
+}
+
+model Reminder {
+  id              String            @id @default(cuid())
+  message         String            @db.Text
+  sendDate        DateTime
+  deliveryMethod  String
+  status          String
+  appointmentId   String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  appointment     Appointment       @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@index([appointmentId])
+}
+
+model CareInstruction {
+  id              String            @id @default(cuid())
+  title           String
+  description     String            @db.Text
+  patientId       String
+  appointmentId   String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  patient         Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  appointment     Appointment?      @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([appointmentId])
+}

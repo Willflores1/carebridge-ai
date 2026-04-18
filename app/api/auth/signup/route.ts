@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import prisma from '@/prisma/client';
+import { Resend } from 'resend';
+import { welcomeEmailTemplate } from '@/app/utils/emailTemplates/welcomeEmail';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { email, password, firstName, lastName } = body;
 
-    // Validate required fields
     if (!email || !password || !firstName || !lastName) {
       return NextResponse.json(
         { message: 'All fields are required' },
@@ -15,7 +18,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -24,7 +26,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate password strength
     if (password.length < 8) {
       return NextResponse.json(
         { message: 'Password must be at least 8 characters long' },
@@ -32,7 +33,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: email.toLowerCase() },
     });
@@ -44,10 +44,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = await prisma.user.create({
       data: {
         email: email.toLowerCase(),
@@ -55,7 +53,7 @@ export async function POST(request: NextRequest) {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         role: 'STUDENT',
-        isVerified: true, // In production, set to false and implement email verification
+        isVerified: true,
       },
       select: {
         id: true,
@@ -66,6 +64,28 @@ export async function POST(request: NextRequest) {
         createdAt: true,
       },
     });
+
+    const { data, error: emailError } = await resend.emails.send({
+      from: 'CareBridge AI <onboarding@resend.dev>',
+      to: user.email,
+      subject: 'Welcome to CareBridge AI',
+      html: welcomeEmailTemplate({ firstName: user.firstName }),
+    });
+
+    console.log('Resend response data:', data);
+
+    if (emailError) {
+      console.error('Welcome email failed:', emailError);
+
+      return NextResponse.json(
+        {
+          message: 'Account created, but welcome email failed to send',
+          user,
+          emailError,
+        },
+        { status: 201 }
+      );
+    }
 
     return NextResponse.json(
       {

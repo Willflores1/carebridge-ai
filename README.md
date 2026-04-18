@@ -1,260 +1,178 @@
-# Capstone Project Manager
+# CareBridge AI
 
-A full-stack Next.js application for managing capstone projects. Built as a sample project for students learning modern web development.
+CareBridge AI is a healthcare support web application designed to help users navigate the healthcare process with more confidence. The platform focuses on three core areas: appointment reminders, care navigation, and follow-up guidance. The goal is to make healthcare information feel more organized, accessible, and easier to act on.
 
-## Tech Stack
+## Project Overview
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Database**: PostgreSQL
-- **ORM**: Prisma
-- **Authentication**: NextAuth.js
-- **Styling**: Tailwind CSS
+Many patients struggle with keeping track of appointments, understanding next steps after visits, and knowing where to go for the right type of care. CareBridge AI was created as a prototype business application to address that gap.
+
+The application provides a clean healthcare-focused user experience and demonstrates how business needs, frontend design, backend logic, database integration, analytics, and email communication can work together in one system.
 
 ## Features
 
-- User authentication (email/password + OAuth)
-- Project management with team collaboration
-- Task tracking with Kanban-style board
-- Milestone management
-- Role-based access control
-- Responsive design
+- Custom branded homepage and business pages
+- About, Services, Features, FAQ, and Contact pages
+- User authentication with sign up and sign in
+- Welcome email integration
+- Appointment reminder email demonstration
+- Privacy Policy and Terms of Service pages
+- Google Analytics 4 integration for user tracking
+- Prisma database schema and database connectivity
+- Docker support for local development
+- GitHub Actions CI workflow for automated build checks
 
-## Getting Started
+## Business Idea
 
-### Prerequisites
+CareBridge AI is intended to support patients who need help managing the healthcare journey. It is especially aimed at users who may feel overwhelmed by appointments, follow-up instructions, and care coordination.
 
-- **Docker Desktop** - That's it! Everything runs in containers.
-- Git
+### Problem
+Healthcare systems can be confusing to navigate. Patients may forget appointments, miss important follow-up steps, or feel uncertain about where to go for care.
 
-### Quick Start (Docker)
+### Solution
+CareBridge AI provides a digital support experience centered around reminders, navigation help, and follow-up guidance.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/saberamini/SampleNextJS.git YourProjectName
-   cd YourProjectName
-   ```
+### Target Audience
+- Patients managing multiple appointments
+- Individuals who want clearer healthcare guidance
+- Users who benefit from reminders and structured next steps
 
-2. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
+## Tech Stack
 
-3. **Build and run everything with Docker**
-   ```bash
-   docker compose up --build -d
-   ```
-
-4. **Set up the database**
-   ```bash
-   docker compose exec app npx prisma db push
-   docker compose exec app npx prisma db seed
-   ```
-
-5. **Open the app**
-
-   Visit [http://localhost:3000](http://localhost:3000)
-
-### Useful Docker Commands
-
-```bash
-docker compose logs -f        # View logs
-docker compose down           # Stop containers
-docker compose up -d          # Start containers
-docker compose up --build -d  # Rebuild after code changes
-```
-
-### Alternative: Local Development
-
-If you prefer hot-reload for faster development:
-
-```bash
-# Start only the database in Docker
-docker compose up db -d
-
-# Install dependencies locally (requires Node.js 18+)
-npm install
-
-# Set up database
-npx prisma migrate dev
-npx prisma db seed
-
-# Run with hot-reload
-npm run dev
-```
-
-### Demo Credentials
-
-After running the seed script, you can use these credentials:
-
-| Email | Password | Role |
-|-------|----------|------|
-| alice@student.edu | password123 | Student |
-| bob@student.edu | password123 | Student |
-| carol@student.edu | password123 | Student |
-| instructor@college.edu | password123 | Instructor |
+- **Frontend:** Next.js, React, Tailwind CSS
+- **Authentication:** NextAuth
+- **Database ORM:** Prisma
+- **Database Tools:** Prisma Schema, DBeaver
+- **Email Integration:** Resend
+- **Analytics:** Google Analytics 4
+- **Containerization:** Docker, Docker Compose
+- **CI:** GitHub Actions
+- **Language:** TypeScript
 
 ## Project Structure
 
-```
-├── app/
-│   ├── api/                    # API routes
-│   │   ├── auth/              # Authentication endpoints
-│   │   │   ├── [...nextauth]/ # NextAuth configuration
-│   │   │   └── signup/        # User registration
-│   │   └── protected/         # Protected API routes
-│   │       ├── projects/      # Project CRUD
-│   │       ├── tasks/         # Task CRUD
-│   │       └── user/          # User profile
-│   ├── auth/                   # Auth pages
-│   │   ├── signin/
-│   │   ├── signup/
-│   │   └── error/
-│   ├── contexts/              # React Context providers
-│   ├── dashboard/             # Protected dashboard pages
-│   │   ├── projects/
-│   │   ├── tasks/
-│   │   └── profile/
-│   ├── layout.tsx             # Root layout
-│   ├── page.tsx               # Landing page
-│   └── globals.css            # Global styles
-├── prisma/
-│   ├── schema.prisma          # Database schema
-│   ├── client.ts              # Prisma client singleton
-│   └── seed.ts                # Database seeding
-├── middleware.ts              # Route protection
-├── tailwind.config.ts
-├── next.config.js
-└── package.json
-```
+```bash
+app/                # Pages and routes
+components/         # Reusable UI components
+prisma/             # Prisma schema and seed files
+public/             # Static assets
+scripts/            # Utility scripts
+.github/workflows/  # GitHub Actions workflow
+````
 
-## Database Schema
+## Getting Started
 
-### Core Models
-
-- **User**: User accounts with roles (STUDENT, INSTRUCTOR, ADMIN)
-- **Project**: Capstone projects with status tracking
-- **TeamMember**: Project membership with roles (OWNER, MEMBER, VIEWER)
-- **Task**: Individual tasks with status, priority, and assignments
-- **Milestone**: Project milestones for tracking progress
-- **Comment**: Task comments for collaboration
-
-### Key Relationships
-
-```
-User ─┬─ owns ──> Project
-      ├─ member ─> TeamMember ──> Project
-      ├─ assigned ─> Task
-      └─ creates ──> Task, Comment
-
-Project ─┬─ has ──> Task
-         ├─ has ──> Milestone
-         └─ has ──> TeamMember
-
-Task ─┬─ belongs to ──> Project
-      ├─ assigned to ──> User
-      ├─ linked to ──> Milestone
-      └─ has ──> Comment
-```
-
-## API Routes
-
-### Public Routes
-
-| Method | Route | Description |
-|--------|-------|-------------|
-| POST | `/api/auth/signup` | Register new user |
-| POST | `/api/auth/[...nextauth]` | NextAuth endpoints |
-
-### Protected Routes (requires authentication)
-
-| Method | Route | Description |
-|--------|-------|-------------|
-| GET | `/api/protected/projects` | List user's projects |
-| POST | `/api/protected/projects` | Create new project |
-| GET | `/api/protected/projects/[id]` | Get project details |
-| PUT | `/api/protected/projects/[id]` | Update project |
-| DELETE | `/api/protected/projects/[id]` | Delete project |
-| GET | `/api/protected/tasks` | List tasks |
-| POST | `/api/protected/tasks` | Create task |
-| GET | `/api/protected/tasks/[id]` | Get task details |
-| PUT | `/api/protected/tasks/[id]` | Update task |
-| DELETE | `/api/protected/tasks/[id]` | Delete task |
-| GET | `/api/protected/user` | Get user profile |
-| PUT | `/api/protected/user` | Update user profile |
-
-## Authentication
-
-This project uses NextAuth.js with the following providers:
-
-1. **Credentials** - Email/password authentication
-2. **Google OAuth** (optional) - Requires `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
-3. **GitHub OAuth** (optional) - Requires `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`
-
-### Session Strategy
-
-Uses JWT tokens with 30-day expiration. Session includes:
-- User ID
-- Email
-- First/Last name
-- Role
-
-## Development
-
-### Available Scripts
+### 1. Clone the repository
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-
-# Database commands
-npm run db:generate  # Generate Prisma client
-npm run db:push      # Push schema to database
-npm run db:migrate   # Run migrations
-npm run db:seed      # Seed sample data
-npm run db:studio    # Open Prisma Studio
+git clone https://github.com/Willflores1/carebridge-ai.git
+cd carebridge-ai
 ```
 
-### Adding New Features
-
-1. **New API Route**: Create file in `app/api/protected/`
-2. **New Page**: Create file in `app/dashboard/`
-3. **New Database Model**: Update `prisma/schema.prisma` then run `npm run db:generate`
-
-## Deployment
-
-### Docker Compose (Recommended for Development)
+### 2. Install dependencies
 
 ```bash
-# Run both database and app
-docker compose up --build -d
-
-# App is available at http://localhost:3000
+npm install
 ```
 
-### Vercel (Production)
+### 3. Set up environment variables
 
-1. Push to GitHub
-2. Import project in Vercel
-3. Add environment variables (DATABASE_URL for a hosted PostgreSQL like Supabase or Neon)
-4. Deploy
+Create a `.env` file in the project root and configure the required values.
 
-### Docker (Production)
+Example variables may include:
+
+```env
+DATABASE_URL=
+NEXTAUTH_URL=
+NEXTAUTH_SECRET=
+RESEND_API_KEY=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GA_MEASUREMENT_ID=
+```
+
+### 4. Set up the database
 
 ```bash
-docker build -t capstone-manager .
-docker run -p 3000:3000 -e DATABASE_URL=your-db-url capstone-manager
+npx prisma generate
+npx prisma db push
 ```
 
-## Learning Resources
+### 5. Run the development server
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [NextAuth.js Documentation](https://next-auth.js.org)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+```bash
+npm run dev
+```
 
-## License
+Then open `http://localhost:3000` in your browser.
 
-MIT License - feel free to use this project for learning and educational purposes.
+## Docker
+
+This project includes Docker support for local containerized development.
+
+To start the application with Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+## GitHub Actions
+
+A GitHub Actions CI workflow is included to automatically verify that the project installs and builds successfully on push and pull request.
+
+## Key Demonstrated Components
+
+This project was developed as a business application capstone and demonstrates:
+
+* frontend customization and branding
+* route-based navigation in Next.js
+* authentication flow
+* transactional email integration
+* healthcare-oriented business framing
+* analytics integration
+* database modeling with Prisma
+* Docker-based environment setup
+* CI workflow setup with GitHub Actions
+
+## AI Tools Used
+
+AI tools were used during development to support both design and implementation.
+
+* **Antigravity** was used to help generate and customize the site’s visual structure and branding direction
+* **ChatGPT** was used for coding help, troubleshooting, and implementation support
+
+AI was helpful for speeding up development and solving technical issues, but manual fixes were still needed to correct mistakes, refine content, and ensure the final project matched the intended business idea.
+
+## Future Improvements
+
+If developed further, CareBridge AI could be expanded with:
+
+* personalized reminder scheduling tied to user accounts
+* richer patient dashboards
+* dynamic care recommendation flows
+* provider search and filtering
+* stronger production-ready email and notification workflows
+* deeper analytics reporting
+
+## Author
+
+William Flores
+
+Business Application of AI Capstone Project
+
+````
+
+## A couple small edits I’d also make
+Since you already changed the package name, I’d also make sure the README does **not** mention:
+- Capstone Project Manager
+- sample credentials
+- project/task/milestone management language
+- any template wording from the starter
+
+## Best next move
+After replacing the README, commit it with something like:
+
+```bash
+git add README.md
+git commit -m "Update README for CareBridge AI project"
+git push
+````
